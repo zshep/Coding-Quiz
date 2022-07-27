@@ -12,7 +12,7 @@
 </head>
 <body>
     <!--create top banner to hold link to high scores and timer-->
-    <div class ="header">
+    <div class="header">
         <a href="#high-scores">See High scores</a>
 
         <div class ="timer">
@@ -28,18 +28,28 @@
 
 
     <!-- Create container to hold game-->
-    <section class = "game">
-        <!-- Top part of Game container (hold question)-->
+    <main class="game">
+        <!-- Top part of Game container Prompt)-->
+        <section class="Prompt">
+            <!--make section for Question-->
+            <div id="Question", data-state="hidden"></div>
             <!--ALso make welcome to the game-->
+            <div id="High-Scores", data-state="hidden"></div>
             <!-- ALso High scores-->
-
+        </section>
 
         <!-- Middile part of game container (holds choices)-->
+        <section class="input">
             <!--Make start game button-->
             <!-- make buttons for game-->
-
+            <!-- make input for initials for score AND to play again
+            -->
+        </section>
 
         <!--bottom part of game container (holds corret/incorrect)-->
+        <section class="info">
+            <!-- make text to state if correct or incorrect-->
+        </section>
     </section>
     <script src="script.js"></script>
 </body>
