@@ -31,24 +31,35 @@
     <main class="game">
         <!-- Top part of Game container Prompt)-->
         <section class="Prompt">
+           <!-- make welcome to the game-->
+            <div id="Welcome", data-state="hidden"></div> 
             <!--make section for Question-->
             <div id="Question", data-state="hidden"></div>
-            <!--ALso make welcome to the game-->
-            <div id="High-Scores", data-state="hidden"></div>
             <!-- ALso High scores-->
+            <div id="High-Scores", data-state="hidden"></div>
         </section>
 
         <!-- Middile part of game container (holds choices)-->
         <section class="input">
             <!--Make start game button-->
+            <button type="button" class="start_button">Start Game </button>
             <!-- make buttons for game-->
+            <button type="button" class="game_button" id="option1"></button><br></br>
+            <button type="button" class="game_button" id="option2"></button><br></br>
+            <button type="button" class="game_button" id="option3"></button><br></br>
+            <button type="button" class="game_button" id="option4"></button><br></br>
             <!-- make input for initials for score AND to play again
             -->
+            <input type="text" id="initials" name="initials" placeholder="Type your Initials Here"/>
+            <label for="initials">Initials</label>
         </section>
 
         <!--bottom part of game container (holds corret/incorrect)-->
         <section class="info">
             <!-- make text to state if correct or incorrect-->
+            <div>
+                <h1></h1>
+            </div>
         </section>
     </section>
     <script src="script.js"></script>
