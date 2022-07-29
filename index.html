@@ -33,39 +33,34 @@
     <main class="Action">
         <!-- Welcome Screen-->
         <section class="Welcome" , data-state="hidden">
-            <p>Test your general knowledge of coding here! Answer all the questions before time is up. Incorrect answers will result in a loss of 5 additional seconds.</p>
+            <p>Test your general knowledge of coding here! Answer all the questions before time is up. Incorrect answers
+                will result in a loss of 5 additional seconds.</p>
             <!--start game button-->
             <button type="button" id="start_button">Start Game </button><br></br>
 
-            
+
         </section>
 
         <!-- game container (Questions, choices, results)-->
         <section class="Quiz" , data-state="hidden">
+          
+                <h1 id="question"></h1>
 
-            <!--div for Question-->
-            <div id="Question">
-            
-
-            </div>
-
-
-            <!-- div for buttons for game-->
-            <div id="button options">
+                                   
                 <button type="button" class="game_button" id="option1"></button><br></br>
                 <button type="button" class="game_button" id="option2"></button><br></br>
                 <button type="button" class="game_button" id="option3"></button><br></br>
                 <button type="button" class="game_button" id="option4"></button><br></br>
             </div>
 
-            <div id="results", data-state="hidden">
-
+            <div id="results" , data-state="hidden">
+                <p>Hidden Results</p>
             </div>
 
         </section>
 
         <!--High Scores/ Play again screen-->
-        <section class="High-Scores", data-state="hidden">
+        <section class="High-Scores" , data-state="hidden">
 
             <div id="user-input-end">
                 <!-- make input for initials for score AND to play again
@@ -73,14 +68,15 @@
                 <input type="text" id="initials" name="initials" placeholder="Type your Initials Here" />
                 <label for="initials">Initials</label><br></br>
 
-
-                <!--start game button
-                <button type="button" id="start_button">Start Game </button><br></br>-->
+                <div id="start-button-end">
+                    <!--start game button-->
+                    <button type="button" id="start_button">Start Game </button><br></br>
+                </div>
             </div>
 
         </section>
-    </section>
-    <script src="./assets/codingQuiz.js"></script>
+        </section>
+        <script src="./assets/codingQuiz.js"></script>
 </body>
 
 </html>
