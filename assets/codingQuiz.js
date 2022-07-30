@@ -18,19 +18,28 @@ var questions = [
                 options: ["here", "there", "everywhere", "nowhere"],
                 ans: "there"
         },
+        {
+                prompt: "When are you?",
+                options: ["Now", "then", "Later", "IDK"],
+                ans: "Later"
+
+        }
 ]
+// variable to keep track of current Q
 var currentQ;
 
 //To do: Make function to play game
 function game() {
-        // window.alert("HellO");
+        
         console.log("the game has started");
         //Displays question -grab question and insert into
-        // quest.
+       
         currentQ = 0;
-        nextQuestion()
+        console.log(currentQ);
         // timerBegins()
-        //Displays Answer Choices
+        //displays question and answer choices
+        nextQuestion();
+        
         return;
 }
 
@@ -39,27 +48,46 @@ function nextQuestion(){
         quest.textContent = questions[currentQ].prompt
         optBtn1.textContent = questions[currentQ].options[0]
         optBtn2.textContent = questions[currentQ].options[1]
+        optBtn3.textContent = questions[currentQ].options[2]
+        optBtn4.textContent = questions[currentQ].options[3]
 }
 //TO do: make score counter
+function scoreCounter() {
 
+
+        return;
+}
+
+//function to check if user answer is correct or incorrect
 function checkAnswer(event) {
         var userPick = event.target.textContent;
         if(userPick == questions[currentQ].ans){
                 console.log("right")
+                // put in code to add to score
         } else {
                 console.log("wrong")
+                //put in code to subtract time from timer
         }
 
         currentQ++
         if(currentQ< questions.length) {
                 nextQuestion()
         }
+        else {
+            //    
+            console.log("Out of questions")
+            console.log("the game is over")    
+            gameOver()
+        }
 }
-//To do: Make function to work time
+// function to work time
+function timer() {
+
         //  set to count down each second
 
         // set to lose a chunk of time for wrong answers
-
+        return;
+}
 
 //To do: Make function for Game over
         //set text for when time ran out
@@ -79,3 +107,5 @@ function checkAnswer(event) {
 startBtn.addEventListener("click", game);
 optBtn1.addEventListener("click", checkAnswer);
 optBtn2.addEventListener("click", checkAnswer);
+optBtn3.addEventListener("click", checkAnswer);
+optBtn4.addEventListener("click", checkAnswer);
