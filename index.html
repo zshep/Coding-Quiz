@@ -13,19 +13,13 @@
 </head>
 
 <body>
+    
     <!--create top banner to hold link to high scores and timer-->
     <div class="header">
         <a href="#high-scores">See High scores</a>
 
         <div class="timer">
-            <div class="timer-text">
-                <h1>Time Remaining</h1>
-                <div class="Small-Font">60</div>
-
-            </div>
         </div>
-
-
     </div>
 
 
@@ -35,13 +29,13 @@
         <section class="Welcome" , data-state="hidden">
             <p>Test your general knowledge of coding here! Each correct answer will add 1 to your score. Incorrect answers will result in a loss of 5 additional seconds. The game ends when there are no more questions OR if you run out of time. </p>
             <!--start game button-->
-            <button type="button" id="start_button">Start Game </button><br></br>
+           <center> <button type="button" id="start_button">Start Game </button></center><br></br>
 
 
         </section>
 
         <!-- game container (Questions, choices, results)-->
-        <section class="Quiz" , data-state="hidden">
+        <section class="Quiz" >
           
                 <h1 id="question"></h1>
 
@@ -52,7 +46,7 @@
                 <button type="button" class="game_button" id="option4"></button><br></br>
             </div>
 
-            <div id="results" , data-state="hidden">
+            <div id="results" >
                 <p>Hidden Results</p>
             </div>
 
@@ -60,17 +54,23 @@
 
         <!--High Scores/ Play again screen-->
         <section class="High-Scores" , data-state="hidden">
-
-            <div id="user-input-end">
-                <!-- make input for initials for score AND to play again
+            <!-- make input for initials for score AND to play again
             -->
+            <div id="user-input-end">
+               
+                <center><h1>End of Questions! Enter in your initials to record your score!</h1>
+                <!-- create display of high scores-->
+                <ul class ="High Scores">
+                    <li></li>
+
+                </ul>
                 <input type="text" id="initials" name="initials" placeholder="Type your Initials Here" />
                 <label for="initials">Initials</label><br></br>
 
                 <div id="start-button-end">
                     <!--start game button-->
-                    <button type="button" id="start_button">Start Game </button><br></br>
-                </div>
+                    <button type="button" id="restart_button">Restart Game </button><br></br>
+                </div> </center>
             </div>
 
         </section>
