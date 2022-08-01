@@ -1,6 +1,6 @@
 // variables for buttons
 var startBtn = document.getElementById("start_button");
-var restartBtn =document.getElementById("restart_button");
+var restartBtn = document.getElementById("restart_button");
 var optBtn1 = document.querySelector("#option1");
 var optBtn2 = document.querySelector("#option2");
 var optBtn3 = document.querySelector("#option3");
@@ -15,6 +15,8 @@ var scoresCon = document.querySelector(".High-Scores");
 var timeEl = document.querySelector(".timer");
 var mainEl = document.querySelector(".main");
 var headerCon = document.querySelector(".header");
+var leaderBoard =document.querySelector(".leader-board")
+
 
 //setting defualt hidden/visisble
 welcomeCon.style.display = "block";
@@ -48,8 +50,8 @@ var currentQ;
 
 //To do: Make function to play game
 function game() {
-         console.log("the game has started");
-        timeEl.content = `Time Remaining: + ${secondsLeft}`;
+        console.log("the game has started");
+        timeEl.textContent = `Time Remaining:${secondsLeft}`;
         // change display for welcome to hidden and quiz to visible
         welcomeCon.style.display = "none";
         quizCon.style.display = "block";
@@ -62,12 +64,12 @@ function game() {
 
         //displays question and answer choices
         nextQuestion();
-        
+
         return;
 }
 
 
-function nextQuestion(){
+function nextQuestion() {
         quest.textContent = questions[currentQ].prompt
         optBtn1.textContent = questions[currentQ].options[0]
         optBtn2.textContent = questions[currentQ].options[1]
@@ -84,7 +86,7 @@ function scoreCounter() {
 //function to check if user answer is correct or incorrect
 function checkAnswer(event) {
         var userPick = event.target.textContent;
-        if(userPick == questions[currentQ].ans){
+        if (userPick == questions[currentQ].ans) {
                 console.log("right")
                 // put in code to add to score
         } else {
@@ -93,44 +95,44 @@ function checkAnswer(event) {
         }
 
         currentQ++
-        if(currentQ< questions.length) {
+        if (currentQ < questions.length) {
                 nextQuestion()
         }
         else {
-            //    
-            console.log("Out of questions")
-            console.log("the game is over")    
-            gameOver()
+                //    
+                console.log("Out of questions")
+                console.log("the game is over")
+                gameOver()
         }
 }
 // function to work time
 function timer() {
-           
-               
-         console.log("Timer has started")
-        
-          var timerInterval = setInterval(function() {
-           
-            secondsLeft--;
-            timeEl.textContent = `Time Remaining:${secondsLeft}`;;
-        
-            if(secondsLeft === 0) {
-              clearInterval(timerInterval);
-              console.log("The timer has ended");
-              gameOver();
-            }
-          }, 1000);
+
+
+        console.log("Timer has started")
+
+        var timerInterval = setInterval(function () {
+
+                secondsLeft--;
+                timeEl.textContent = `Time Remaining:${secondsLeft}`;;
+
+                if (secondsLeft === 0) {
+                        clearInterval(timerInterval);
+                        console.log("The timer has ended");
+                        gameOver();
+                }
+        }, 1000);
 
 
         // set to lose a chunk of time for wrong answers
 
-        }       
-       
+}
 
 
-// function for Game over
-function gameOver(){
-        
+
+// function for Game over - give initials, play again
+function gameOver() {
+
         //change visibility for three containers
         welcomeCon.style.display = "none";
         quizCon.style.display = "none";
@@ -139,21 +141,33 @@ function gameOver(){
 
         //set text for when time ran out
         //set text for when all questions are answered
-       
-        //User enter in initials and posts score
+
+        
+        // var to grab users initials
+        var userInitials = document.querySelector("#initials");
+                
+        //User enter in initials and submits score
+        userInitials.addEventListener("submit", function(e){
+        leaderBoard.textContent.append(userInitials);
+        //input goes away
+        userInitials.style.display = "none";
+
+        });
+
+
         //save score into local.storage
         //Show List of high scores (retrieve from local storag
 
 
 }
-// to do: make function for play again 
+
 
 
 
 
 // Action Code:
 
-        //listen for click to start game
+//listen for click to start game
 startBtn.addEventListener("click", game);
 restartBtn.addEventListener("click", game)
 optBtn1.addEventListener("click", checkAnswer);
