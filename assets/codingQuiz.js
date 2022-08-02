@@ -36,25 +36,25 @@ quizCon.style.display = "none";
 scoresCon.style.display = "none";
 headerCon.style.display = "none";
 
-var high_scores = []
+var high_scores = [];
 
 
 // make array filled with objects for Questions and Answers 
 var questions = [
         {
-                prompt: "How are you?",
-                options: ["good", "bad", "terrible", "great"],
-                ans: "good"
+                prompt: "Inside the HTML document, where do you place your JavaScript code?",
+                options: ["Inside the <script> element", "Inside the <link> element", "In the <footer> element", "Inside the <head> element"],
+                ans: "Inside the <script> element"
         },
         {
-                prompt: "Where are you?",
-                options: ["here", "there", "everywhere", "nowhere"],
-                ans: "there"
+                prompt: "What operator is used to assign a value to a declared variable?",
+                options: ["Equal sign (=)", "Colon (:)", "Double-equal (==)", "Question mark (?)"],
+                ans: "Equal sign (=)"
         },
         {
-                prompt: "When are you?",
-                options: ["Now", "then", "Later", "IDK"],
-                ans: "Later"
+                prompt: "What are the six primitive data types in JavaScript?",
+                options: ["string, number, boolean, bigInt, symbol, undefined", "sentence, int, truthy, bigInt, symbol, undefined", "sentence, float, data, bigInt, symbol, undefined", "string, num, falsy, bigInt, symbol, undefined"],
+                ans: "string, number, boolean, bigInt, symbol, undefined"
 
         }
 ]
@@ -65,19 +65,17 @@ var currentQ;
 function game() {
         console.log("the game has started");
 
-        
+        //Rest all the things
         // change display for welcome to hidden and quiz to visible
         welcomeCon.style.display = "none";
         quizCon.style.display = "block";
         headerCon.style.display = "block";
         scoresCon.style.display = "none";
-
         //Sets currentQ to first question in array of questions      
         currentQ = 0;
-        console.log(currentQ);
-        
+        counter= 0;
         sL = 30;
-
+        //starts timer
         timerInterval = setInterval(function () {
 
                 sL--;
@@ -93,7 +91,6 @@ function game() {
         console.log("Timer has started");
         //displays question and answer choices
         nextQuestion();
-
         return;
 }
 
@@ -137,29 +134,38 @@ function submit_score() {
         // put value of user initials into variable
        
         var userInitials = document.querySelector("#initials").value;
+        //checking outputs that I want
+        console.log(`user: ${userInitials}`);
+        console.log(`count:${counter}`);
+        let winner = {name:userInitials, score:counter}
 
-        console.log(userInitials);
+        high_scores.push(winner);
+
         // create li element
-        scoreList = document.createElement("li");
-        scoreList.textContent = userInitials;
-        leaderBoard.appendChild(scoreList); // add to leaderboard
-
-        //code to prevent empty Initials
-        if (userInitials = "") {
-                window.alert("that is not a valid response");
-                return;
-        } else {
-                // create li element
+        
+        for (var i =0; i < high_scores.length; i++){
                 scoreList = document.createElement("li");
-                scoreList.textContent = userInitials;
-                leaderBoard.appendChild(scoreList); // add to leaderboard
-                localStorage.setItem("scores", userInitials);
-                //input goes away and clear the userInitials
+                scoreList.textContent =`${high_scores[i].name} ${high_scores[i].score}`;
                 
-                userInitials.value = "";
-                initials.style.display = "none";
                 
         }
+
+        leaderBoard.appendChild(scoreList); // add to leaderboard
+        var highscoreobject ={ leaderBoard: high_scores};
+       // console.log((highscoreobject));
+        //console.log(JSON.stringify(highscoreobject));
+        localStorage.setItem("scores", JSON.stringify(highscoreobject));
+        //input goes away and clear the userInitials
+        
+
+        userInitials.value = "";
+        initials.style.display = "none";
+
+        // To Do: code to prevent empty Initials
+        //if (userInitials = "") {
+        //        window.alert("that is not a valid response");
+        //        return;
+        //} else {                  }
 }
 
 
@@ -174,33 +180,21 @@ function gameOver() {
         scoresCon.style.display = "block";
         headerCon.style.display = "none";
         initials.style.display = "block";
+        var savedHighscores = localStorage.getItem("scores");
+        var savedhighsObject = JSON.parse(savedHighscores);
+        console.log(savedHighscores, savedhighsObject );
+         //User enter in initials and submits score
         userInitials = "";
         text = document.createTextNode(counter);
-        console.log(text)
         scoreNum.append(text);
-        //set text for when time ran out
-        //set text for when all questions are answered
-
-
-        // var to grab users initials
-
-
-        //User enter in initials and submits score
-
-
+                
+       
 
 }
 
 
 //save score into local.storage
 //Show List of high scores (retrieve from local storag
-
-
-
-
-
-
-
 
 // Action Code:
 
@@ -213,4 +207,4 @@ optBtn3.addEventListener("click", checkAnswer);
 optBtn4.addEventListener("click", checkAnswer);
 
 // add listen event for the input
-submitBtn.addEventListener("click", submit_score());
+submitBtn.addEventListener("click", submit_score);
