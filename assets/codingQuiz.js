@@ -15,7 +15,19 @@ var scoresCon = document.querySelector(".High-Scores");
 var timeEl = document.querySelector(".timer");
 var mainEl = document.querySelector(".main");
 var headerCon = document.querySelector(".header");
-var leaderBoard =document.querySelector(".leader-board")
+var leaderBoard = document.querySelector(".leader-board");
+var submitBtn = document.querySelector("#restart_button");
+var initials = document.querySelector(".submit_score");
+var results = document.querySelector("#results");
+var scoreNum = document.querySelector(".scoreShown");
+
+
+
+//local storage set up
+var scores = localStorage.getItem("scores");
+var timerInterval;
+var counter= 0;
+var sL;
 
 
 //setting defualt hidden/visisble
@@ -24,9 +36,10 @@ quizCon.style.display = "none";
 scoresCon.style.display = "none";
 headerCon.style.display = "none";
 
-var secondsLeft = 10;
+var high_scores = []
 
-// make object for Questions and Answers 
+
+// make array filled with objects for Questions and Answers 
 var questions = [
         {
                 prompt: "How are you?",
@@ -51,23 +64,38 @@ var currentQ;
 //To do: Make function to play game
 function game() {
         console.log("the game has started");
-        timeEl.textContent = `Time Remaining:${secondsLeft}`;
+
+        
         // change display for welcome to hidden and quiz to visible
         welcomeCon.style.display = "none";
         quizCon.style.display = "block";
         headerCon.style.display = "block";
+        scoresCon.style.display = "none";
 
         //Sets currentQ to first question in array of questions      
         currentQ = 0;
         console.log(currentQ);
-        timer();
+        
+        sL = 30;
 
+        timerInterval = setInterval(function () {
+
+                sL--;
+                timeEl.textContent = `Time Remaining:${sL}`;
+
+                if (sL === 0) {
+                        clearInterval(timerInterval);
+                        console.log("The timer has ended");
+                        gameOver();
+                }
+        }, 1000);
+        timeEl.textContent = `Time Remaining:${sL}`;
+        console.log("Timer has started");
         //displays question and answer choices
         nextQuestion();
 
         return;
 }
-
 
 function nextQuestion() {
         quest.textContent = questions[currentQ].prompt
@@ -76,21 +104,18 @@ function nextQuestion() {
         optBtn3.textContent = questions[currentQ].options[2]
         optBtn4.textContent = questions[currentQ].options[3]
 }
-//TO do: make score counter
-function scoreCounter() {
 
-
-        return;
-}
 
 //function to check if user answer is correct or incorrect
 function checkAnswer(event) {
         var userPick = event.target.textContent;
         if (userPick == questions[currentQ].ans) {
-                console.log("right")
+                console.log("correct")
+                counter++;
                 // put in code to add to score
         } else {
-                console.log("wrong")
+                console.log("incorrect")
+                sL-=10;
                 //put in code to subtract time from timer
         }
 
@@ -100,66 +125,78 @@ function checkAnswer(event) {
         }
         else {
                 //    
-                console.log("Out of questions")
-                console.log("the game is over")
-                gameOver()
+                console.log("Out of questions");
+                console.log("the game is over");
+                gameOver();
         }
 }
-// function to work time
-function timer() {
 
 
-        console.log("Timer has started")
+//when submit button clicks, take user input and put it to High scores
+function submit_score() {
+        // put value of user initials into variable
+       
+        var userInitials = document.querySelector("#initials").value;
 
-        var timerInterval = setInterval(function () {
+        console.log(userInitials);
+        // create li element
+        scoreList = document.createElement("li");
+        scoreList.textContent = userInitials;
+        leaderBoard.appendChild(scoreList); // add to leaderboard
 
-                secondsLeft--;
-                timeEl.textContent = `Time Remaining:${secondsLeft}`;;
-
-                if (secondsLeft === 0) {
-                        clearInterval(timerInterval);
-                        console.log("The timer has ended");
-                        gameOver();
-                }
-        }, 1000);
-
-
-        // set to lose a chunk of time for wrong answers
-
+        //code to prevent empty Initials
+        if (userInitials = "") {
+                window.alert("that is not a valid response");
+                return;
+        } else {
+                // create li element
+                scoreList = document.createElement("li");
+                scoreList.textContent = userInitials;
+                leaderBoard.appendChild(scoreList); // add to leaderboard
+                localStorage.setItem("scores", userInitials);
+                //input goes away and clear the userInitials
+                
+                userInitials.value = "";
+                initials.style.display = "none";
+                
+        }
 }
-
 
 
 // function for Game over - give initials, play again
 function gameOver() {
 
-        //change visibility for three containers
+        clearInterval(timerInterval);
+
+        //change visibility for the containers
         welcomeCon.style.display = "none";
         quizCon.style.display = "none";
         scoresCon.style.display = "block";
         headerCon.style.display = "none";
-
+        initials.style.display = "block";
+        userInitials = "";
+        text = document.createTextNode(counter);
+        console.log(text)
+        scoreNum.append(text);
         //set text for when time ran out
         //set text for when all questions are answered
 
-        
+
         // var to grab users initials
-        var userInitials = document.querySelector("#initials");
-                
+
+
         //User enter in initials and submits score
-        userInitials.addEventListener("submit", function(e){
-        leaderBoard.textContent.append(userInitials);
-        //input goes away
-        userInitials.style.display = "none";
 
-        });
-
-
-        //save score into local.storage
-        //Show List of high scores (retrieve from local storag
 
 
 }
+
+
+//save score into local.storage
+//Show List of high scores (retrieve from local storag
+
+
+
 
 
 
@@ -169,10 +206,11 @@ function gameOver() {
 
 //listen for click to start game
 startBtn.addEventListener("click", game);
-restartBtn.addEventListener("click", game)
+restartBtn.addEventListener("click", game);
 optBtn1.addEventListener("click", checkAnswer);
 optBtn2.addEventListener("click", checkAnswer);
 optBtn3.addEventListener("click", checkAnswer);
 optBtn4.addEventListener("click", checkAnswer);
 
 // add listen event for the input
+submitBtn.addEventListener("click", submit_score());
