@@ -1,6 +1,7 @@
 // variables for buttons
 var startBtn = document.getElementById("start_button");
 var restartBtn = document.getElementById("restart_button");
+var submitBtn = document.querySelector("#restart_button");
 var optBtn1 = document.querySelector("#option1");
 var optBtn2 = document.querySelector("#option2");
 var optBtn3 = document.querySelector("#option3");
@@ -16,18 +17,24 @@ var timeEl = document.querySelector(".timer");
 var mainEl = document.querySelector(".main");
 var headerCon = document.querySelector(".header");
 var leaderBoard = document.querySelector(".leader-board");
-var submitBtn = document.querySelector("#restart_button");
+
 var initials = document.querySelector(".submit_score");
 var results = document.querySelector("#results");
-var scoreNum = document.querySelector(".scoreShown");
+var scoreNum = document.querySelector(".scoreShown"); // spot for score
 
+// initial variables for counters and time keepers
+var high_scores = []; //array to hold scores with initials
+var timerInterval;
+var counter= 0;
+var sL; //seconds left
 
 
 //local storage set up
-var scores = localStorage.getItem("scores");
-var timerInterval;
-var counter= 0;
-var sL;
+console.table(JSON.parse(localStorage.getItem("scores")))
+
+localStorage.setItem("scores", JSON.stringify(highscoreobject));
+
+//var highscoreobject ={ leaderBoard: high_scores};
 
 
 //setting defualt hidden/visisble
@@ -36,7 +43,7 @@ quizCon.style.display = "none";
 scoresCon.style.display = "none";
 headerCon.style.display = "none";
 
-var high_scores = [];
+
 
 
 // make array filled with objects for Questions and Answers 
@@ -131,33 +138,28 @@ function checkAnswer(event) {
 
 //when submit button clicks, take user input and put it to High scores
 function submit_score() {
+        //get rid of submit button show restart button
+        submitBtn.style.display ="none";
+        restartBtn.style.display = "block";
         // put value of user initials into variable
-       
         var userInitials = document.querySelector("#initials").value;
         //checking outputs that I want
         console.log(`user: ${userInitials}`);
         console.log(`count:${counter}`);
+        //add users initials and score as an object to the highscores array
         let winner = {name:userInitials, score:counter}
-
         high_scores.push(winner);
-
-        // create li element
-        
+                
+        leaderBoard.innerHTML = "";
         for (var i =0; i < high_scores.length; i++){
-                scoreList = document.createElement("li");
+                
+                scoreList = document.createElement("li"); // create li element
                 scoreList.textContent =`${high_scores[i].name} ${high_scores[i].score}`;
-                
-                
+                leaderBoard.appendChild(scoreList); // add to leaderboard
         }
-
-        leaderBoard.appendChild(scoreList); // add to leaderboard
-        var highscoreobject ={ leaderBoard: high_scores};
-       // console.log((highscoreobject));
-        //console.log(JSON.stringify(highscoreobject));
-        localStorage.setItem("scores", JSON.stringify(highscoreobject));
-        //input goes away and clear the userInitials
+        console.table(high_scores)
         
-
+        //input goes away and clear the userInitials
         userInitials.value = "";
         initials.style.display = "none";
 
@@ -168,7 +170,7 @@ function submit_score() {
         //} else {                  }
 }
 
-
+var scores = localStorage.getItem("scores");
 // function for Game over - give initials, play again
 function gameOver() {
 
@@ -180,14 +182,19 @@ function gameOver() {
         scoresCon.style.display = "block";
         headerCon.style.display = "none";
         initials.style.display = "block";
-        var savedHighscores = localStorage.getItem("scores");
-        var savedhighsObject = JSON.parse(savedHighscores);
-        console.log(savedHighscores, savedhighsObject );
-         //User enter in initials and submits score
+        restartBtn.style.display = 'none';
+        initials.value ="";
+        
+        //var savedHighscores = localStorage.getItem("scores");
+        //var savedhighsObject = JSON.parse(savedHighscores);
+        //console.log(savedHighscores, savedhighsObject );
+        
+        //User enter in initials and submits score
         userInitials = "";
-        text = document.createTextNode(counter);
-        scoreNum.append(text);
-                
+        text = counter;
+        console.log(text)
+        scoreNum.innerHTML ="";      
+        scoreNum.append(`Your Score is: ${text}`);
        
 
 }
@@ -207,4 +214,4 @@ optBtn3.addEventListener("click", checkAnswer);
 optBtn4.addEventListener("click", checkAnswer);
 
 // add listen event for the input
-submitBtn.addEventListener("click", submit_score);
+submitBtn.addEventListener("click", game);
