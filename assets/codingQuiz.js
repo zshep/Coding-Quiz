@@ -7,7 +7,6 @@ var optBtn2 = document.querySelector("#option2");
 var optBtn3 = document.querySelector("#option3");
 var optBtn4 = document.querySelector("#option4");
 
-
 //list of main containers
 var quest = document.querySelector("#question");
 var quizCon = document.querySelector(".Quiz");
@@ -17,6 +16,7 @@ var timeEl = document.querySelector(".timer");
 var mainEl = document.querySelector(".main");
 var headerCon = document.querySelector(".header");
 var leaderBoard = document.querySelector(".leader-board");
+var input = document.querySelector("#initials");
 
 var initials = document.querySelector(".submit_score");
 var results = document.querySelector("#results");
@@ -32,7 +32,7 @@ var sL; //seconds left
 //local storage set up
 console.table(JSON.parse(localStorage.getItem("scores")))
 
-localStorage.setItem("scores", JSON.stringify(highscoreobject));
+//localStorage.setItem("scores", JSON.stringify(highscoreobject));
 
 //var highscoreobject ={ leaderBoard: high_scores};
 
@@ -142,12 +142,13 @@ function submit_score() {
         submitBtn.style.display ="none";
         restartBtn.style.display = "block";
         // put value of user initials into variable
-        var userInitials = document.querySelector("#initials").value;
+        var userInitials = input.value;
+        
         //checking outputs that I want
         console.log(`user: ${userInitials}`);
         console.log(`count:${counter}`);
         //add users initials and score as an object to the highscores array
-        let winner = {name:userInitials, score:counter}
+        let winner = {name:userInitials, score:counter};
         high_scores.push(winner);
                 
         leaderBoard.innerHTML = "";
@@ -158,10 +159,9 @@ function submit_score() {
                 leaderBoard.appendChild(scoreList); // add to leaderboard
         }
         console.table(high_scores)
-        
-        //input goes away and clear the userInitials
-        userInitials.value = "";
-        initials.style.display = "none";
+        localStorage.setItem("scores", JSON.stringify(high_scores))
+        userInitials.placeholder = "";//clear the userInitials
+        initials.style.display = "none"; //input goes away
 
         // To Do: code to prevent empty Initials
         //if (userInitials = "") {
@@ -170,38 +170,47 @@ function submit_score() {
         //} else {                  }
 }
 
-var scores = localStorage.getItem("scores");
+
 // function for Game over - give initials, play again
 function gameOver() {
 
         clearInterval(timerInterval);
-
         //change visibility for the containers
         welcomeCon.style.display = "none";
         quizCon.style.display = "none";
-        scoresCon.style.display = "block";
         headerCon.style.display = "none";
-        initials.style.display = "block";
-        restartBtn.style.display = 'none';
-        initials.value ="";
-        
-        //var savedHighscores = localStorage.getItem("scores");
-        //var savedhighsObject = JSON.parse(savedHighscores);
-        //console.log(savedHighscores, savedhighsObject );
+        scoresCon.style.display = "block";
+        initials.style.display = "block"; //input shown
+        restartBtn.style.display = 'none'; // can't restart until initials given
+        leaderBoard.style.display = "block";
+        //initials.innerHTML ="Enter Your Intials";
         
         //User enter in initials and submits score
-        userInitials = "";
         text = counter;
-        console.log(text)
         scoreNum.innerHTML ="";      
         scoreNum.append(`Your Score is: ${text}`);
-       
 
+        var savedHighscores = localStorage.getItem("scores");
+        var savedHS = JSON.parse(savedHighscores);
+        console.table(savedHS);
+        if (savedHS == null) {
+                savedHS = []
+        };
+        //leaderBoard.innerHTML = "";// empty leaderboard to prevent stacking
+        
+        savedHS.forEach();
+        
+        for (var i =0; i < high_scores.length; i++){
+                
+                scoreList = document.createElement("li"); // create li element
+                scoreList.textContent =`${savedHS[i].name} ${savedHS[i].score}`;
+                leaderBoard.appendChild(scoreList); // add to leaderboard
+        }
+                       
 }
 
 
-//save score into local.storage
-//Show List of high scores (retrieve from local storag
+
 
 // Action Code:
 
