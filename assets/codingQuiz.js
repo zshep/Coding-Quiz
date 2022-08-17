@@ -143,26 +143,29 @@ function submit_score() {
         restartBtn.style.display = "block";
         // put value of user initials into variable
         var userInitials = input.value;
-        
+        if (userInitials = false) {
+                window.alert("please enter your intials");
+                return;
+        } else {
         //checking outputs that I want
-        console.log(`user: ${userInitials}`);
-        console.log(`count:${counter}`);
-        //add users initials and score as an object to the highscores array
-        let winner = {name:userInitials, score:counter};
-        high_scores.push(winner);
-                
-        leaderBoard.innerHTML = "";
-        for (var i =0; i < high_scores.length; i++){
-                
-                scoreList = document.createElement("li"); // create li element
-                scoreList.textContent =`${high_scores[i].name} ${high_scores[i].score}`;
-                leaderBoard.appendChild(scoreList); // add to leaderboard
+                console.log(`user: ${userInitials}`);
+                console.log(`count:${counter}`);
+                //add users initials and score as an object to the highscores array
+                let winner = {name:userInitials, score:counter};
+                high_scores.push(winner);
+                        
+                leaderBoard.innerHTML = "";
+                for (var i =0; i < high_scores.length; i++){
+                        
+                        scoreList = document.createElement("li"); // create li element
+                        scoreList.textContent =`${high_scores[i].name} ${high_scores[i].score}`;
+                        leaderBoard.appendChild(scoreList); // add to leaderboard
+                }
+                console.table(high_scores);
+                localStorage.setItem("scores", JSON.stringify(high_scores));
+                userInitials.placeholder = "";//clear the userInitials
+                initials.style.display = "none"; //input goes away
         }
-        console.table(high_scores)
-        localStorage.setItem("scores", JSON.stringify(high_scores))
-        userInitials.placeholder = "";//clear the userInitials
-        initials.style.display = "none"; //input goes away
-
         // To Do: code to prevent empty Initials
         //if (userInitials = "") {
         //        window.alert("that is not a valid response");
@@ -193,14 +196,13 @@ function gameOver() {
         var savedHighscores = localStorage.getItem("scores");
         var savedHS = JSON.parse(savedHighscores);
         console.table(savedHS);
+        
         if (savedHS == null) {
-                savedHS = []
+                savedHS = [];
         };
         //leaderBoard.innerHTML = "";// empty leaderboard to prevent stacking
-        
-        savedHS.forEach();
-        
-        for (var i =0; i < high_scores.length; i++){
+                       
+        for (var i =0; i < savedHS.length; i++){
                 
                 scoreList = document.createElement("li"); // create li element
                 scoreList.textContent =`${savedHS[i].name} ${savedHS[i].score}`;
